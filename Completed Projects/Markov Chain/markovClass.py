@@ -3,16 +3,15 @@ import random
 
 class MarkovChain:
 	# a is a str, b is a str, all probs are floats, length is a num
+	# Patch: These variables need to be simplified.
 	def __init__(self, a, b, probAgA, probAgB, probAindep, probBindep,\ 
 		length):
 		self.a = a
 		self.b = b
 		self.probAgA = probAgA
 		self.probBgA = 1 - probAgA
-		#self.probBgA = probBgA
 		self.probAgB = probAgB
 		self.probBgB = 1 - probBgB
-		#self.probBgB = probBgB
 		self.probAindep = probAindep
 		self.probBindep = probBindep
 		self.length = length
@@ -52,10 +51,10 @@ class MarkovChain:
 		choice = random.uniform(0, 99)
 		return testList[choice]
 
-
+	#Uses randomProb() in order to produce a chain of markov generated
+	#inputted A and inputted B. This produced chain is a string.
 	def produceChain(self):
 		outStr = ""
-		# dictionary containing each probability 
 		
 		for i in range(1,length):
 			# if you are beginning the chain, probs are independent
@@ -64,7 +63,17 @@ class MarkovChain:
 					self.b))
 			# otherwise, check conditions of previous output
 			else:
+				initState = outStr[i-1]
+				if initState == self.a:
+					outStr.append(self.randomProb(self.ProbAgA, \
+						self.a, self.b))
+				else:
+					outStr.append(self.randomProb(self.ProbAgB, \
+						self.a, self.b))
 
+	# Print the produced markov chain to the screen
+	def printChain(self):
+		print(self.produceChain())
 
 test = MarkovChain("a", "b", 0.7, 0.4, 0.5, 0.5, 10)
 test.printChain()
