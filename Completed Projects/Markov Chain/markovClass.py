@@ -82,6 +82,8 @@ class MarkovChain:
 					outStr.append(self.randomProb(self.ProbAgB, \
 						self.a, self.b))
 
+		return outStr
+
 	# Print the produced markov chain to the screen
 	def printChain(self):
 		print(self.produceChain())
